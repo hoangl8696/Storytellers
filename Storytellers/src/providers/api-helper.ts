@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, RequestOptions } from '@angular/http'
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { Headers, Http, RequestOptions, URLSearchParams } from '@angular/http'
 import 'rxjs/add/operator/map';
 /* API helper service:
 Designed to ease communication with the wbma-server-node.
@@ -11,7 +10,6 @@ export class ApiHelper {
   private baseUrl: any = 'http://media.mw.metropolia.fi/wbma';
   private headers: Headers;
   private options: RequestOptions;
-  private body: any;
 
   constructor(private http: Http) { }
 
