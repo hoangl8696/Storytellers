@@ -6,7 +6,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 
-import { Page1 } from '../pages/page1/page1';
+import { Front } from '../pages/front/front';
 import { Page2 } from '../pages/page2/page2';
 
 
@@ -25,7 +25,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page One', component: Page1 },
+      { title: 'Front Page', component: Front },
       { title: 'Page Two', component: Page2 }
     ];
     this.storage.get('token').then(token => {
@@ -35,7 +35,7 @@ export class MyApp {
           this.user.setEmail(res.json().email);
           this.user.setUser_id(res.json().user_id);
           this.user.setUsername(res.json().username);
-          this.rootPage = Page1;
+          this.rootPage = Front;
         });
       } else {
         this.rootPage = AuthenticationPage;

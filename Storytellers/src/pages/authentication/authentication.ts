@@ -1,4 +1,4 @@
-import { Page1 } from './../page1/page1';
+import { Front } from './../front/front';
 import { User } from './../../providers/user';
 import { PasswordRetypeValidator } from './../../validators/password-retype-validator';
 import { ApiHelper } from './../../providers/api-helper';
@@ -59,7 +59,7 @@ export class AuthenticationPage {
     this.user.setUser_id(res.json().user.user_id);
     this.user.setUsername(res.json().user.username);
     this.storage.set('token', res.json().token).then(res => {
-      this.navCtrl.setRoot(Page1);
+      this.navCtrl.setRoot(Front);
     });
   }
 
