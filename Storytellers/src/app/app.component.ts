@@ -1,4 +1,7 @@
+import { User } from './../providers/user';
+import { ApiHelper } from './../providers/api-helper';
 import { AuthenticationPage } from './../pages/authentication/authentication';
+import { Storage } from '@ionic/storage';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
@@ -13,11 +16,11 @@ import { Page2 } from '../pages/page2/page2';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = AuthenticationPage;
+  rootPage: any;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform, private storage: Storage, private apihelper: ApiHelper, private user: User) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -25,6 +28,19 @@ export class MyApp {
       { title: 'Page One', component: Page1 },
       { title: 'Page Two', component: Page2 }
     ];
+    this.storage.get('token').then(token => {
+      if (token) {
+        this.apihelper.getCurrentUser(token).subscribe(res => {
+          this.user.setToken(token);
+          this.user.setEmail(res.json().email);
+          this.user.setUser_id(res.json().user_id);
+          this.user.setUsername(res.json().username);
+          this.rootPage = Page1;
+        });
+      } else {
+        this.rootPage = AuthenticationPage;
+      }
+    });
 
   }
 

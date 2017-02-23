@@ -1,10 +1,13 @@
+import { Page1 } from './../page1/page1';
+import { User } from './../../providers/user';
 import { PasswordRetypeValidator } from './../../validators/password-retype-validator';
 import { ApiHelper } from './../../providers/api-helper';
-import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { Component, NgZone } from '@angular/core';
+import { NavController } from 'ionic-angular';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UsernameValidator } from '../../validators/username-validator';
 import { Form } from '../../data-model/form';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-authentication',
@@ -16,9 +19,10 @@ export class AuthenticationPage {
   private signupForm: FormGroup;
   private formTongle: boolean;
   private formType: string;
-  private formData: Form
+  private formData: Form;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private formbuilder: FormBuilder, private apihelper: ApiHelper) {
+  constructor(public navCtrl: NavController, private formbuilder: FormBuilder,
+    private apihelper: ApiHelper, private zone: NgZone, private storage: Storage, private user: User) {
     this.formTongle = true;
     this.formType = "Signup";
     this.buildLoginForm();
@@ -28,13 +32,15 @@ export class AuthenticationPage {
 
   public login() {
     this.apihelper.login(this.extractData("login")).subscribe(res => {
-      console.log(res);
+      this.saveAndDismiss(res);
     });
   }
 
   public signup() {
     this.apihelper.signup(this.extractData("signup")).subscribe(res => {
-      console.log(res);
+      this.apihelper.login(this.extractData("loginAfterSignup")).subscribe(res => {
+        this.saveAndDismiss(res);
+      });
     });
   }
 
@@ -45,6 +51,16 @@ export class AuthenticationPage {
     } else {
       this.formType = "Login";
     }
+  }
+
+  private saveAndDismiss(res: any) {
+    this.user.setToken(res.json().token);
+    this.user.setEmail(res.json().user.email);
+    this.user.setUser_id(res.json().user.user_id);
+    this.user.setUsername(res.json().user.username);
+    this.storage.set('token', res.json().token).then(res => {
+      this.navCtrl.setRoot(Page1);
+    });
   }
 
   private extractData(formType: string): {} {
@@ -60,6 +76,9 @@ export class AuthenticationPage {
           this.formData = new Form(this.signupForm.controls['username'].value, this.signupForm.controls['password'].value,
             this.signupForm.controls['email'].value);
         }
+        return this.formData.getData();
+      case "loginAfterSignup":
+        this.formData = new Form(this.signupForm.controls['username'].value, this.signupForm.controls['password'].value);
         return this.formData.getData();
     }
   }
