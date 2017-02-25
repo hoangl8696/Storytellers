@@ -1,3 +1,5 @@
+import { CardComponent } from './../components/card/card';
+import { Thumbnails } from './../pipes/thumbnails';
 import { Storage } from '@ionic/storage';
 import { User } from './../providers/user';
 import { AuthenticationPage } from './../pages/authentication/authentication';
@@ -13,7 +15,9 @@ import { Page2 } from '../pages/page2/page2';
     MyApp,
     Front,
     Page2,
-    AuthenticationPage
+    AuthenticationPage,
+    Thumbnails,
+    CardComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,7 +27,8 @@ import { Page2 } from '../pages/page2/page2';
     MyApp,
     Front,
     Page2,
-    AuthenticationPage
+    AuthenticationPage,
+    CardComponent
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ApiHelper, User, Storage]
 })

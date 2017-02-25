@@ -38,8 +38,8 @@ export class ApiHelper {
     const url = this.baseUrl + '/login/';
     const options = this.headerBuilder();
     const body = JSON.stringify(data);
-    console.log(options);
-    console.log(body);
+    // console.log(options);
+    // console.log(body);
     return this.http.post(url, body, options);
   }
 
@@ -48,7 +48,7 @@ export class ApiHelper {
     const url = this.baseUrl + '/users/';
     const options = this.headerBuilder();
     const body = JSON.stringify(data);
-    console.log(body);
+    // console.log(body);
     return this.http.post(url, body, options);
   }
 
@@ -56,28 +56,28 @@ export class ApiHelper {
     const url = this.baseUrl + '/users/';
     const options = this.headerBuilder('', token);
     const body = JSON.stringify(data);
-    console.log(body);
+    // console.log(body);
     return this.http.put(url, body, options);
   }
 
   getUser: any = (id: any, token: any) => {
     const url = this.baseUrl + '/users/' + id;
     const options = this.headerBuilder('', token);
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
   getAllUsers: any = (token: any) => {
     const url = this.baseUrl + '/users/';
     const options = this.headerBuilder('', token);
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
   getCurrentUser: any = (token: any) => {
     const url = this.baseUrl + '/users/user/';
     const options = this.headerBuilder('', token);
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
@@ -85,21 +85,21 @@ export class ApiHelper {
   getFile: any = (id: any) => {
     const url = this.baseUrl + '/media/' + id;
     const options = this.headerBuilder();
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
   deleteFile: any = (id: any, token: any) => {
     const url = this.baseUrl + '/media/' + id;
     const options = this.headerBuilder('', token);
-    console.log(options);
+    // console.log(options);
     return this.http.delete(url, options);
   }
 
   requestAllAndCount: any = () => {
     const url = this.baseUrl + '/media/all';
     const options = this.headerBuilder();
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
@@ -111,14 +111,14 @@ export class ApiHelper {
     } else {
       options = this.headerBuilder();
     }
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
   getUserMedia: any = (token: any) => {
     const url = this.baseUrl + '/media/user';
     const options = this.headerBuilder('', token);
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
@@ -129,7 +129,7 @@ export class ApiHelper {
     if (start) { params.set('start', start); }
     if (limit) { params.set('limit', limit); }
     options.search = params;
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
@@ -137,7 +137,7 @@ export class ApiHelper {
     const url = this.baseUrl + '/media/search';
     const options = this.headerBuilder('', token);
     const body = JSON.stringify(data);
-    console.log(body);
+    // console.log(body);
     return this.http.post(url, body, options);
   }
 
@@ -145,7 +145,7 @@ export class ApiHelper {
     const url = this.baseUrl + '/media/' + id;
     const options = this.headerBuilder('', token);
     const body = JSON.stringify(data);
-    console.log(body);
+    // console.log(body);
     return this.http.put(url, body, options);
   }
 
@@ -161,28 +161,28 @@ export class ApiHelper {
     const url = this.baseUrl + '/favourites';
     const options = this.headerBuilder('', token);
     const body = JSON.stringify(data);
-    console.log(options, body);
+    // console.log(options, body);
     return this.http.post(url, body, options);
   }
 
   deleteFavourite: any = (id: any, token: any) => {
     const url = this.baseUrl + '/favourites/file/' + id;
     const options = this.headerBuilder('', token);
-    console.log(options);
+    // console.log(options);
     return this.http.delete(url, options);
   }
 
-  requestFavouritesById: any = (id: any, token: any) => {
+  requestFavouritesById: any = (id: any) => {
     const url = this.baseUrl + '/favourites/file/' + id;
-    const options = this.headerBuilder('', token);
-    console.log(options);
+    const options = this.headerBuilder();
+    // console.log(options);
     return this.http.get(url, options);
   }
 
   requestFavourites: any = (token: any) => {
     const url = this.baseUrl + '/favourites';
     const options = this.headerBuilder('', token);
-    console.log(options);
+    // console.log(options);
     return this.http.get(url, options);
   }
 
@@ -197,8 +197,8 @@ export class ApiHelper {
     const url = this.baseUrl + '/comments';
     const body = JSON.stringify(data);
     const options = this.headerBuilder('', token);
-    console.log(body);
-    console.log(JSON.stringify(options));
+    // console.log(body);
+    // console.log(JSON.stringify(options));
     return this.http.post(url, body, options);
   }
 
@@ -210,7 +210,7 @@ export class ApiHelper {
   getCommentsOfUser = (token: any) => {
     const url = this.baseUrl + '/comments';
     const options = this.headerBuilder('', token);
-    console.log(JSON.stringify(options));
+    // console.log(JSON.stringify(options));
     return this.http.get(url, options);
   }
 
@@ -219,8 +219,8 @@ export class ApiHelper {
     const url = this.baseUrl + '/ratings';
     const body = JSON.stringify(data);
     const options = this.headerBuilder('', token);
-    console.log(body);
-    console.log(JSON.stringify(options));
+    // console.log(body);
+    // console.log(JSON.stringify(options));
     return this.http.post(url, body, options);
   }
 

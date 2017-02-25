@@ -1,0 +1,36 @@
+<ion-card>
+
+    <ion-item>
+      <!--<ion-avatar item-left>
+        <img src="img/marty-avatar.png">
+      </ion-avatar>-->
+      <h2>{{card.username}}</h2>
+    </ion-item>
+
+    <img [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + (card.file_name | thumbnails: 'small')">
+
+    <ion-card-content>
+      <p>{{card.title}}</p>
+      <p>{{card.description}}</p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <div>{{card.likes.length}}</div>
+      </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small>
+        <ion-icon name="text"></ion-icon>
+        <div>{{card.comments.length}}</div>
+      </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="card.time_added"></ion-datetime>
+        </ion-note>
+      </ion-col>
+    </ion-row>
+  </ion-card>
