@@ -1,14 +1,23 @@
 import { User } from './../providers/user';
 import { ApiHelper } from './../providers/api-helper';
 export class Card {
-  private title: string;
-  private description: string;
-  private file_id: number;
-  private file_name: string;
-  private user_id: number;
-  private media_type: string;
-  private mime_type: string;
-  private time_added;
+  // private title: string;
+  // private description: string;
+  // private file_id: number;
+  // private file_name: string;
+  // private user_id: number;
+  // private media_type: string;
+  // private mime_type: string;
+  // private time_added;
+
+  public title: string;
+  public description: string;
+  public file_id: number;
+  public filename: string;
+  public user_id: number;
+  public media_type: string;
+  public mime_type: string;
+  public time_added;
 
   private username: string;
   private screenshot: string;
@@ -21,8 +30,8 @@ export class Card {
   public setTitle(title: string) {
     this.title = title;
   }
-  public setFile_name(file_name: string){
-    this.file_name = file_name;
+  public setFile_name(file_name: string) {
+    this.filename = file_name;
   }
   public setDescription(description: string) {
     this.description = description;
@@ -43,28 +52,30 @@ export class Card {
     this.time_added = time_added;
   }
 
-  // public getTitle(title: string) {
-  //   return this.title;
-  // }
-  // public getDescription(description: string) {
-  //   return this.description;
-  // }
-  // public getFile_id(file_id: number) {
-  //   return this.file_id;
-  // }
-  // public getUser_id(user_id: number) {
-  //   return this.user_id;
-  // }
-  // public getMedia_type(media_type: string) {
-  //   return this.media_type;
-  // }
-  // public getMime_type(mime_type: string) {
-  //   return this.mime_type;
-  // }
-
-  // public getTime_added(time_added: string) {
-  //   return this.time_added;
-  // }
+  public getTitle() {
+    return this.title;
+  }
+  public getDescription() {
+    return this.description;
+  }
+  public getFile_id() {
+    return this.file_id;
+  }
+  public getUser_id() {
+    return this.user_id;
+  }
+  public getMedia_type() {
+    return this.media_type;
+  }
+  public getMime_type() {
+    return this.mime_type;
+  }
+  public getTime_added() {
+    return this.time_added;
+  }
+  public getFilename() {
+    return this.filename;
+  }
 
   public processData() {
     return new Promise(resolve => {

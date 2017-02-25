@@ -45,7 +45,7 @@ export class Front {
           this.isScrollUp = true;
         });
       } else {
-        this.zone.run(()=>{
+        this.zone.run(() => {
           this.isScrollUp = false;
         });
       }
@@ -78,25 +78,42 @@ export class Front {
 
   private getMediaList() {
     return new Promise(resolve => {
-      this.apihelper.getMedia((this.loadStatus * 20), 20)
+      this.apihelper.getMedia((4 * 9), 9)
         .map(res => res.json())
         .subscribe(mediaList => {
-          mediaList.map(media => {
-            let card: Card = new Card(this.apihelper, this.user);
-            card.setDescription(media.description);
-            card.setFile_id(media.file_id);
-            card.setMedia_type(media.media_type);
-            card.setMime_type(media.mime_type);
-            card.setTime_added(media.time_added);
-            card.setTitle(media.title);
-            card.setUser_id(media.user_id);
-            card.setFile_name(media.filename);
-            card.processData().then(res => {
-              this.mediaList.push(card);
-            });
+          this.extractData(mediaList,0)
+          .then(()=>this.extractData(mediaList,1))
+          .then(()=>this.extractData(mediaList,2))
+          .then(()=>this.extractData(mediaList,3))
+          .then(()=>this.extractData(mediaList,4))
+          .then(()=>this.extractData(mediaList,5))
+          .then(()=>this.extractData(mediaList,6))
+          .then(()=>this.extractData(mediaList,7))
+          .then(()=>this.extractData(mediaList,8))
+          .then(()=>{
+            resolve();
           });
-          resolve();
         });
+    });
+  }
+
+  private extractData(mediaList: Card[], counter) {
+    return new Promise(resolve => {
+      let card: Card = new Card(this.apihelper, this.user);
+      let media: Card = mediaList[counter];
+      card.setDescription(media.description);
+      card.setFile_id(media.file_id);
+      card.setMedia_type(media.media_type);
+      card.setMime_type(media.mime_type);
+      card.setTime_added(media.time_added);
+      card.setTitle(media.title);
+      card.setUser_id(media.user_id);
+      card.setFile_name(media.filename);
+      card.processData().then(res => {
+        this.mediaList.push(card);
+        console.log(this.mediaList);
+        resolve();
+      });
     });
 
   }
