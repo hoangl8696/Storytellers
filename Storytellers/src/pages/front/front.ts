@@ -1,3 +1,4 @@
+import { FrontState } from './../../providers/front-state';
 import { AuthenticationPage } from './../authentication/authentication';
 import { ApiHelper } from './../../providers/api-helper';
 import { Card } from './../../data-model/card';
@@ -14,26 +15,26 @@ export class Front {
 
   @ViewChild(Content) content: Content;
 
-  private mediaList: Card[];
-  private loadStatus: number;
   private isScrollUp: boolean;
+  private isReady: boolean;
 
   constructor(public navCtrl: NavController, private storage: Storage, private user: User,
-    private apihelper: ApiHelper, private loadingCtrl: LoadingController, private zone: NgZone) {
-    this.mediaList = [];
-    this.loadStatus = 0;
+    private apihelper: ApiHelper, private loadingCtrl: LoadingController, private zone: NgZone, private state: FrontState) {
     this.isScrollUp = false;
+    this.isReady = false;
   }
 
   ionViewWillEnter() {
+    this.isReady = false;
     let loader = this.loadingCtrl.create({
       spinner: 'circles',
       content: 'Loading data'
     });
     loader.present();
+    this.state.clearState();
     this.getMediaList()
       .then(res => {
-        console.log(this.mediaList);
+        console.log(this.state.mediaList);
         loader.dismiss();
       });
   }
@@ -44,6 +45,10 @@ export class Front {
         this.zone.run(() => {
           this.isScrollUp = true;
         });
+      } else if (res.scrollTop > 500) {
+        this.zone.run(()=>{
+          this.isReady = true;
+        });
       } else {
         this.zone.run(() => {
           this.isScrollUp = false;
@@ -53,17 +58,17 @@ export class Front {
   }
 
   public refresh(event) {
-    this.mediaList = [];
-    this.loadStatus = 0;
+    this.state.clearState();
     this.getMediaList()
       .then(res => {
-        console.log(this.mediaList);
+        console.log(this.state.mediaList);
         event.complete();
       });
   }
 
   public loadMore(event) {
-    this.loadStatus = this.loadStatus + 1;
+          console.log('im called');
+    this.state.loadStatus = this.state.loadStatus + 1;
     this.getMediaList()
       .then(res => {
         event.complete();
@@ -83,13 +88,15 @@ export class Front {
     });
     loader.present();
     this.storage.clear()
-    .then(res=>this.navCtrl.setRoot(AuthenticationPage))
-    .then(res=>{loader.dismiss()});
+      .then(res => this.navCtrl.setRoot(AuthenticationPage))
+      .then(res => { loader.dismiss() });
   }
 
   private getMediaList() {
+    console.log(this.state);
+
     return new Promise(resolve => {
-      this.apihelper.getMedia((this.loadStatus * 9), 9)
+      this.apihelper.getMedia((this.state.loadStatus * 9), 9)
         .map(res => res.json())
         .subscribe(mediaList => {
           this.extractData(mediaList, 0)
@@ -121,8 +128,8 @@ export class Front {
       card.setUser_id(media.user_id);
       card.setFile_name(media.filename);
       card.processData().then(res => {
-        this.mediaList.push(card);
-        console.log(this.mediaList);
+        this.state.mediaList.push(card);
+        console.log(this.state.mediaList);
         resolve();
       });
     });

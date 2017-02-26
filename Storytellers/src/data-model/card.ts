@@ -17,13 +17,13 @@ export class Card {
   public user_id: number;
   public media_type: string;
   public mime_type: string;
-  public time_added;
+  public time_added: string;
 
   public username: string;
   public screenshot: string;
   public thumbnails: {};
-  public likes: {}[];
-  public comments: {}[];
+  public likes: {favourite_id: number, file_id: number, user_id: number} [];
+  public comments: {comment_id: number, file_id: number, user_id: number, comment: string, time_added: string} [];
 
   constructor(private apihelper: ApiHelper, private user: User) {
     this.title = "";

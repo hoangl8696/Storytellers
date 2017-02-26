@@ -18,10 +18,10 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <cards *ngFor="let media of mediaList" [cardData]="media">
+  <cards *ngFor="let media of state.mediaList" [cardData]="media">
   </cards>
 
-  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+  <ion-infinite-scroll [enabled]="isReady" (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content loadingSpinner="circles" loadingText="Loading more data...">></ion-infinite-scroll-content>
   </ion-infinite-scroll>
 

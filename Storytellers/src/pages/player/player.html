@@ -30,13 +30,13 @@
 
   <ion-row>
     <ion-col>
-      <button ion-button icon-left clear small (click)=likes($event)>
+      <button ion-button icon-left clear small (click)=postLike($event) [disabled]="alreadyLiked">
         <ion-icon name="thumbs-up"></ion-icon>
         <div>{{cardData.likes.length}}</div>
       </button>
     </ion-col>
     <ion-col>
-      <button ion-button icon-left clear small (click)=comments($event)>
+      <button ion-button icon-left clear small (click)=openCommentSection($event)>
         <ion-icon name="text"></ion-icon>
         <div>{{cardData.comments.length}}</div>
       </button>
@@ -64,7 +64,7 @@
       </ion-item>
       <ion-item>
       <button item-left ion-button type="submit" [disabled]="!commentForm.valid">Add</button>
-      <button item-right ion-button type="button" (click)="dismissComment($event)">Cancel</button>
+      <button item-right ion-button type="button" (click)="dismissCommentSection($event)">Cancel</button>
       </ion-item>
     </form>
   </div>

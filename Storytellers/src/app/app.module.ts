@@ -1,3 +1,4 @@
+import { FrontState } from './../providers/front-state';
 import { PlayerPage } from './../pages/player/player';
 import { CardsComponent } from './../components/cards/cards';
 import { Thumbnails } from './../pipes/thumbnails';
@@ -33,6 +34,6 @@ import { Page2 } from '../pages/page2/page2';
     CardsComponent,
     PlayerPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ApiHelper, User, Storage]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ApiHelper, User, Storage, FrontState]
 })
 export class AppModule {}
