@@ -101,6 +101,12 @@ export class Card {
                   resolve();
                 });
               break;
+            case 'audio':
+              this.fetchLikes()
+              .then(res=> this.fetchComment() )
+              .then(res=>{
+                resolve();
+              });
           }
         });
     });

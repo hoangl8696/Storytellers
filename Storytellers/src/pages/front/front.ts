@@ -5,7 +5,6 @@ import { Storage } from '@ionic/storage';
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { NavController, LoadingController, Content } from 'ionic-angular';
 
-
 @Component({
   selector: 'page-front',
   templateUrl: 'front.html'
@@ -78,7 +77,7 @@ export class Front {
 
   private getMediaList() {
     return new Promise(resolve => {
-      this.apihelper.getMedia((4 * 9), 9)
+      this.apihelper.getMedia((this.loadStatus * 9), 9)
         .map(res => res.json())
         .subscribe(mediaList => {
           this.extractData(mediaList,0)
