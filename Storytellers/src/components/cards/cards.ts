@@ -1,3 +1,5 @@
+import { PlayerPage } from './../../pages/player/player';
+import { NavController, LoadingController } from 'ionic-angular';
 import { Card } from './../../data-model/card';
 import { Component, Input } from '@angular/core';
 
@@ -16,10 +18,21 @@ export class CardsComponent {
   @Input('cardData') media: Card;
   private card: Card;
 
-  constructor() {
+  constructor(private navCtrl: NavController, private loadingCtrl: LoadingController) {
   }
 
   ngOnChanges() {
     this.card = this.media;
+  }
+
+  public view() {
+    let loader = this.loadingCtrl.create({
+      spinner: 'circles',
+      content: 'Loading data'
+    });
+    loader.present();
+    this.navCtrl.push(PlayerPage, this.card).then(() => {
+      loader.dismiss();
+    });
   }
 }

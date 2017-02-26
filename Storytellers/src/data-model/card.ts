@@ -19,13 +19,27 @@ export class Card {
   public mime_type: string;
   public time_added;
 
-  private username: string;
-  private screenshot: string;
-  private thumbnails: {};
-  private likes: {}[];
-  private comments: {}[];
+  public username: string;
+  public screenshot: string;
+  public thumbnails: {};
+  public likes: {}[];
+  public comments: {}[];
 
-  constructor(private apihelper: ApiHelper, private user: User) { }
+  constructor(private apihelper: ApiHelper, private user: User) {
+    this.title = "";
+    this.description = "";
+    this.file_id = null;
+    this.filename = "";
+    this.user_id = null;
+    this.media_type = "";
+    this.mime_type = "";
+    this.time_added = null;
+    this.username = "";
+    this.screenshot = "";
+    this.thumbnails = {};
+    this.likes = [];
+    this.comments = [];
+  }
 
   public setTitle(title: string) {
     this.title = title;

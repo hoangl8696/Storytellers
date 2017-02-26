@@ -1,3 +1,4 @@
+import { AuthenticationPage } from './../authentication/authentication';
 import { ApiHelper } from './../../providers/api-helper';
 import { Card } from './../../data-model/card';
 import { User } from './../../providers/user';
@@ -75,23 +76,34 @@ export class Front {
     });
   }
 
+  public logOut(event) {
+    let loader = this.loadingCtrl.create({
+      spinner: 'circles',
+      content: 'Loading data'
+    });
+    loader.present();
+    this.storage.clear()
+    .then(res=>this.navCtrl.setRoot(AuthenticationPage))
+    .then(res=>{loader.dismiss()});
+  }
+
   private getMediaList() {
     return new Promise(resolve => {
       this.apihelper.getMedia((this.loadStatus * 9), 9)
         .map(res => res.json())
         .subscribe(mediaList => {
-          this.extractData(mediaList,0)
-          .then(()=>this.extractData(mediaList,1))
-          .then(()=>this.extractData(mediaList,2))
-          .then(()=>this.extractData(mediaList,3))
-          .then(()=>this.extractData(mediaList,4))
-          .then(()=>this.extractData(mediaList,5))
-          .then(()=>this.extractData(mediaList,6))
-          .then(()=>this.extractData(mediaList,7))
-          .then(()=>this.extractData(mediaList,8))
-          .then(()=>{
-            resolve();
-          });
+          this.extractData(mediaList, 0)
+            .then(() => this.extractData(mediaList, 1))
+            .then(() => this.extractData(mediaList, 2))
+            .then(() => this.extractData(mediaList, 3))
+            .then(() => this.extractData(mediaList, 4))
+            .then(() => this.extractData(mediaList, 5))
+            .then(() => this.extractData(mediaList, 6))
+            .then(() => this.extractData(mediaList, 7))
+            .then(() => this.extractData(mediaList, 8))
+            .then(() => {
+              resolve();
+            });
         });
     });
   }

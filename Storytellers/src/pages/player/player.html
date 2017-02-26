@@ -1,0 +1,71 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>player</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <img *ngIf="cardData.media_type === 'image'" [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + (cardData.filename | thumbnails: 'medium')">
+  <audio controls loop *ngIf="cardData.media_type === 'audio'">
+    <source [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + cardData.filename" [type]="cardData.mime_type">
+  </audio>
+  <video controls *ngIf="cardData.media_type === 'video'">
+    <source [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + cardData.filename" [type]="cardData.mime_type">
+  </video>
+  <ion-item>
+    <h1>{{cardData.title}}</h1>
+  </ion-item>
+  <ion-item>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="cardData.time_added" disabled="true"></ion-datetime>
+  </ion-item>
+  <ion-item>
+    <!--<ion-avatar item-left>
+        <img src="img/marty-avatar.png">
+      </ion-avatar>-->
+    <h2 item-right>{{cardData.username}}</h2>
+  </ion-item>
+
+  <ion-row>
+    <ion-col>
+      <button ion-button icon-left clear small (click)=likes($event)>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <div>{{cardData.likes.length}}</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button icon-left clear small (click)=comments($event)>
+        <ion-icon name="text"></ion-icon>
+        <div>{{cardData.comments.length}}</div>
+      </button>
+    </ion-col>
+  </ion-row>
+
+  <ion-card *ngFor="let comment of cardData.comments">
+    <ion-item>
+      <!--<ion-avatar item-left>
+        <img src="img/marty-avatar.png">
+      </ion-avatar>-->
+      <h3 item-left>User ID: {{comment.user_id}}</h3>
+      <ion-datetime item-left displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="comment.time_added" disabled="true"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <h3 item-left>{{comment.comment}}</h3>
+    </ion-item>
+  </ion-card>
+
+  <div [hidden]="!userComment">
+    <form [formGroup]="commentForm" (ngSubmit)="postComment($event)">
+      <ion-item>
+        <ion-label floating>Write more</ion-label>
+        <ion-textarea #focusInput formControlName="comment"></ion-textarea>
+      </ion-item>
+      <ion-item>
+      <button item-left ion-button type="submit" [disabled]="!commentForm.valid">Add</button>
+      <button item-right ion-button type="button" (click)="dismissComment($event)">Cancel</button>
+      </ion-item>
+    </form>
+  </div>
+</ion-content>

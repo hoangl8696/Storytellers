@@ -1,9 +1,14 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
+    <ion-item>
+      <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Front Page</ion-title>
+      <ion-title item-right>Front Page</ion-title>
+      <button ion-button item-right (click)="logOut($event)">
+      <ion-icon name="log-out"></ion-icon>
+    </button>
+    </ion-item>
   </ion-navbar>
 </ion-header>
 
