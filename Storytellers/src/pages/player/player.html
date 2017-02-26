@@ -30,8 +30,12 @@
 
   <ion-row>
     <ion-col>
-      <button ion-button icon-left clear small (click)=postLike($event) [disabled]="alreadyLiked">
+      <button ion-button icon-left clear small (click)=postLike($event) *ngIf="!alreadyLiked">
         <ion-icon name="thumbs-up"></ion-icon>
+        <div>{{cardData.likes.length}}</div>
+      </button>
+      <button ion-button icon-left clear small (click)=undoLike($event) *ngIf="alreadyLiked">
+        <ion-icon name="thumbs-down"></ion-icon>
         <div>{{cardData.likes.length}}</div>
       </button>
     </ion-col>

@@ -42,6 +42,16 @@ export class PlayerPage {
       .then(res => this.updateLikeUI(res))
   }
 
+  public undoLike(event) {
+    this.deleteLike()
+    .then(res => this.undoLikeUI())
+  }
+
+  private undoLikeUI() {
+    this.alreadyLiked = false;
+    this.cardData.likes.pop();
+  }
+
   private updateLikeUI(res) {
     this.alreadyLiked = true;
     let data = {
@@ -50,6 +60,20 @@ export class PlayerPage {
       file_id: this.cardData.file_id
     }
     this.cardData.likes.push(data);
+  }
+
+  private deleteLike() {
+    return new Promise(resolve => {
+
+
+      this.apihelper.deleteFavourite(this.cardData.file_id, this.user.getToken())
+        .map(res => res.json())
+        .subscribe(res => {
+          console.log(res);
+
+          resolve(res);
+        });
+    });
   }
 
   private sendLike(data) {
