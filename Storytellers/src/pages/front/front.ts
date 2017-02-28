@@ -1,3 +1,4 @@
+import { UploadPage } from './../upload/upload';
 import { FrontState } from './../../providers/front-state';
 import { AuthenticationPage } from './../authentication/authentication';
 import { ApiHelper } from './../../providers/api-helper';
@@ -19,7 +20,8 @@ export class Front {
   private isReady: boolean;
 
   constructor(public navCtrl: NavController, private storage: Storage, private user: User,
-    private apihelper: ApiHelper, private loadingCtrl: LoadingController, private zone: NgZone, private state: FrontState) {
+    private apihelper: ApiHelper, private loadingCtrl: LoadingController, private zone: NgZone,
+    private state: FrontState) {
     this.isScrollUp = false;
     this.isReady = false;
   }
@@ -46,7 +48,7 @@ export class Front {
           this.isScrollUp = true;
         });
       } else if (res.scrollTop > 500) {
-        this.zone.run(()=>{
+        this.zone.run(() => {
           this.isReady = true;
         });
       } else {
@@ -55,6 +57,10 @@ export class Front {
         });
       }
     });
+  }
+
+  public upload(event) {
+    this.navCtrl.push(UploadPage);
   }
 
   public refresh(event) {
@@ -67,7 +73,7 @@ export class Front {
   }
 
   public loadMore(event) {
-          console.log('im called');
+    console.log('im called');
     this.state.loadStatus = this.state.loadStatus + 1;
     this.getMediaList()
       .then(res => {

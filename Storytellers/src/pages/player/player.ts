@@ -44,7 +44,7 @@ export class PlayerPage {
 
   public undoLike(event) {
     this.deleteLike()
-    .then(res => this.undoLikeUI())
+      .then(res => this.undoLikeUI())
   }
 
   private undoLikeUI() {
@@ -64,13 +64,9 @@ export class PlayerPage {
 
   private deleteLike() {
     return new Promise(resolve => {
-
-
       this.apihelper.deleteFavourite(this.cardData.file_id, this.user.getToken())
         .map(res => res.json())
         .subscribe(res => {
-          console.log(res);
-
           resolve(res);
         });
     });

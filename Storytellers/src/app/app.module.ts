@@ -1,3 +1,4 @@
+import { UploadPage } from './../pages/upload/upload';
 import { FrontState } from './../providers/front-state';
 import { PlayerPage } from './../pages/player/player';
 import { CardsComponent } from './../components/cards/cards';
@@ -10,17 +11,18 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { Front } from '../pages/front/front';
-import { Page2 } from '../pages/page2/page2';
+import { AccountPage } from '../pages/account/account';
 
 @NgModule({
   declarations: [
     MyApp,
     Front,
-    Page2,
+    AccountPage,
     AuthenticationPage,
     Thumbnails,
     CardsComponent,
-    PlayerPage
+    PlayerPage,
+    UploadPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -29,10 +31,11 @@ import { Page2 } from '../pages/page2/page2';
   entryComponents: [
     MyApp,
     Front,
-    Page2,
+    AccountPage,
     AuthenticationPage,
     CardsComponent,
-    PlayerPage
+    PlayerPage,
+    UploadPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ApiHelper, User, Storage, FrontState]
 })

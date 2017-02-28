@@ -1,3 +1,4 @@
+import { AccountPage } from './../pages/account/account';
 import { User } from './../providers/user';
 import { ApiHelper } from './../providers/api-helper';
 import { AuthenticationPage } from './../pages/authentication/authentication';
@@ -5,9 +6,7 @@ import { Storage } from '@ionic/storage';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
-
 import { Front } from '../pages/front/front';
-import { Page2 } from '../pages/page2/page2';
 
 
 @Component({
@@ -26,7 +25,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Front Page', component: Front },
-      { title: 'Page Two', component: Page2 }
+      { title: 'Account Page', component: AccountPage }
     ];
     this.storage.get('token').then(token => {
       if (token) {

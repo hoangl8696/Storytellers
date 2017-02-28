@@ -12,9 +12,11 @@
     <ion-thumbnail item-left>
       <img [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + (card.filename | thumbnails: 'small')" alt="audio file">
     </ion-thumbnail>
-    <h3>{{card.media_type}}</h3>
-    <h2>{{card.title}}</h2>
-    <p>{{card.description}}</p>
-    <button ion-button clear item-right (click)="view($event)">View</button>s
+    <ion-item>
+      <h3>{{card.media_type}}</h3>
+      <h2>{{card.title}}</h2>
+      <p>{{card.description}}</p>
+    </ion-item>
+    <button ion-button clear item-right (click)="view($event)">View</button>
   </ion-item>
 </ion-card>

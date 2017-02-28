@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <ion-item>
+      <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+      <ion-title item-right>Account</ion-title>
+      <button ion-button item-right (click)="logOut($event)">
+      <ion-icon name="log-out"></ion-icon>
+    </button>
+    </ion-item>
+  </ion-navbar>
+</ion-header>
+<!--
+<form [formGroup]="todo" (ngSubmit)="logForm()">
+  <ion-item>
+    <ion-label>Todo</ion-label>
+    <ion-input type="text" formControlName="title"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Description</ion-label>
+    <ion-textarea formControlName="description"></ion-textarea>
+  </ion-item>
+  <button ion-button type="submit" [disabled]="!todo.valid">Submit</button>
+</form>-->
+
+<ion-content padding>
+  <form [formGroup]="accountForm" (ngSubmit)="modifyAccount()">
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="../../../resources/icon.png" alt="user avatar">
+      </ion-avatar>
+      <button type="button" ion-button item-right clear small (click)="modify('image')">
+        <ion-icon name="create"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="person" item-left></ion-icon>
+      <ion-input item-right type="text" formControlName="username"></ion-input>
+      <button type="button" ion-button item-right clear small (click)="modify('username')">
+        <ion-icon [name]="icon[1]"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="mail" item-left></ion-icon>
+      <ion-input item-right type="email" formControlName="email"></ion-input>
+      <button type="button" ion-button item-right clear small (click)="modify('email')">
+        <ion-icon [name]="icon[2]"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item>
+      <h1>About</h1>
+      <button type="button" ion-button item-right clear small (click)="modify('description')">
+        <ion-icon [name]="icon[3]"></ion-icon>
+      </button>
+    </ion-item>
+    <ion-item>
+       <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+    <button ion-button type="submit" [disabled]="!accountForm.valid">Submit</button>
+  </form>
+</ion-content>
+
+<ion-footer padding>
+  <ion-title>Footer</ion-title>
+</ion-footer>
