@@ -138,7 +138,9 @@ export class Front {
       card.setUser_id(media.user_id);
       card.setFile_name(media.filename);
       card.processData().then(res => {
-        this.state.mediaList.unshift(card);
+        if (!card.isComplete) {
+          this.state.mediaList.unshift(card);
+        }
         this.state.index = this.state.index + 1;
         if (this.state.index == this.state.listLength) {
           resolve();

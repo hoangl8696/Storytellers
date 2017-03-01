@@ -3,7 +3,7 @@ import { ApiHelper } from './../../providers/api-helper';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Card } from './../../data-model/card';
 import { Component, NgZone, ViewChild } from '@angular/core';
-import { NavController, NavParams, Content } from 'ionic-angular';
+import { NavController, NavParams, Content, AlertController } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';
 
 @Component({
@@ -19,9 +19,14 @@ export class PlayerPage {
   private commentForm: FormGroup;
   private userComment;
   private alreadyLiked;
+  private comment;
+  private isUser;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private formBuilder: FormBuilder, private apihelper: ApiHelper, private user: User, private zone: NgZone) {
+    private formBuilder: FormBuilder, private apihelper: ApiHelper, private user: User,
+    private zone: NgZone, private alertCtrl: AlertController) {
+
+    this.isUser = false;
     this.cardData = this.navParams.data;
     this.alreadyLiked = false;
     this.userComment = false;
@@ -32,6 +37,40 @@ export class PlayerPage {
 
   ionViewDidLoad() {
     this.checkAlreadyLiked();
+  }
+
+  ionViewWillLoad() {
+    this.comment = this.cardData.comments[this.cardData.comments.length - 1];
+    if (this.user.getUser_id() == this.cardData.user_id) {
+      this.isUser = true;
+    }
+  }
+
+  public finishStory (){
+    let confirm = this.alertCtrl.create({
+      title: 'Are you sure you want to mark this story as finished?',
+      message: 'This action cannot be undo',
+      buttons: [
+        {
+          text: 'No',
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.isUser = false;
+            let data = {
+              file_id: this.cardData.file_id,
+              tag: "Complete"
+            };
+            this.apihelper.tag(data, this.user.getToken())
+            .subscribe(res=>{
+              console.log(res);
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   public postLike(event) {
@@ -96,15 +135,30 @@ export class PlayerPage {
   }
 
   public postComment(event) {
-    let data = {
-      file_id: this.cardData.file_id,
-      comment: this.commentForm.controls['comment'].value
-    };
-    this.sendComment(data)
-      .then(res => this.updateCommentUI())
-      .then(res => {
-        this.dismissCommentSection(event);
-      });
+    let confirm = this.alertCtrl.create({
+      title: 'Are you sure your story is ready?',
+      message: 'You will unable to edit or delete the story after sending it',
+      buttons: [
+        {
+          text: 'No',
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            let data = {
+              file_id: this.cardData.file_id,
+              comment: this.commentForm.controls['comment'].value
+            };
+            this.sendComment(data)
+              .then(res => this.updateCommentUI())
+              .then(res => {
+                this.dismissCommentSection(event);
+              });
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   private checkAlreadyLiked() {
@@ -137,6 +191,7 @@ export class PlayerPage {
             user_id: res[i].user_id
           }
           this.cardData.comments.push(data);
+          this.comment = data;
           resolve();
         });
     });

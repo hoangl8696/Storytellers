@@ -22,8 +22,9 @@ export class Card {
   public username: string;
   public screenshot: string;
   public thumbnails: {};
-  public likes: {favourite_id: number, file_id: number, user_id: number} [];
-  public comments: {comment_id: number, file_id: number, user_id: number, comment: string, time_added: string} [];
+  public likes: { favourite_id: number, file_id: number, user_id: number }[];
+  public comments: { comment_id: number, file_id: number, user_id: number, comment: string, time_added: string }[];
+  public isComplete: boolean;
 
   constructor(private apihelper: ApiHelper, private user: User) {
     this.title = "";
@@ -39,6 +40,7 @@ export class Card {
     this.thumbnails = {};
     this.likes = [];
     this.comments = [];
+    this.isComplete = false;
   }
 
   public setTitle(title: string) {
@@ -103,6 +105,7 @@ export class Card {
                 .then(res => this.fetchLikes())
                 .then(res => this.fetchComment())
                 .then(res => this.fetchThumbnails())
+                .then(res => this.fetchTags())
                 .then(res => {
                   resolve();
                 });
@@ -111,17 +114,34 @@ export class Card {
               this.fetchThumbnails()
                 .then(res => this.fetchLikes())
                 .then(res => this.fetchComment())
+                .then(res => this.fetchTags())
                 .then(res => {
                   resolve();
                 });
               break;
             case 'audio':
               this.fetchLikes()
-              .then(res=> this.fetchComment() )
-              .then(res=>{
-                resolve();
-              });
+                .then(res => this.fetchComment())
+                .then(res => this.fetchTags())
+                .then(res => {
+                  resolve();
+                });
           }
+        });
+    });
+  }
+
+  private fetchTags() {
+    return new Promise(resolve => {
+      this.apihelper.getTagsByFile(this.file_id)
+        .map(res => res.json())
+        .subscribe(res => {
+          if (res.length == 2) {
+            this.isComplete = true;
+          } else {
+            this.isComplete = false;
+          }
+          resolve();
         });
     });
   }
