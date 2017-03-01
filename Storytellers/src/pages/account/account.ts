@@ -14,8 +14,6 @@ export class AccountPage {
 
   private username: string;
   private email: string;
-  private description: string;
-  private image: string;
   private accountForm: FormGroup;
   private icon: string[];
 
@@ -23,8 +21,7 @@ export class AccountPage {
     private user: User, private apihelper: ApiHelper, private formBuilder: FormBuilder, private renderer: Renderer) {
     this.username = this.user.getUsername();
     this.email = this.user.getEmail();
-    this.description = this.user.getDescription();
-    this.icon = ["create", "create", "create", "create"];
+    this.icon = ["create", "create"];
     this.accountForm = this.formBuilder.group({
       username: [{ value: this.username, disabled: true }, Validators.required],
       email: [{ value: this.email, disabled: true }, Validators.required],
@@ -36,11 +33,9 @@ export class AccountPage {
 
   public modify(element: string) {
     switch (element) {
-      case 'image':
-        break;
       case 'username':
         if (this.accountForm.controls['username'].disabled) {
-          this.icon[1] = "close-circle";
+          this.icon[0] = "close-circle";
           this.accountForm.controls['username'].enable();
           break;
         } else {
@@ -49,7 +44,7 @@ export class AccountPage {
         }
       case 'email':
         if (this.accountForm.controls['email'].disabled) {
-          this.icon[2] = "close-circle";
+          this.icon[1] = "close-circle";
           this.accountForm.controls['email'].enable();
           break;
         } else {
@@ -89,11 +84,11 @@ export class AccountPage {
   private reset (element: string) {
     switch (element) {
       case 'username':
-      this.icon[1] = "create";
+      this.icon[0] = "create";
       this.accountForm.controls['username'].reset(this.username);
       break;
       case 'email':
-      this.icon[2] = "create";
+      this.icon[1] = "create";
       this.accountForm.controls['email'].reset(this.email);
       break;
       // case 'description':

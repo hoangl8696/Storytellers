@@ -27,35 +27,18 @@
 <ion-content padding>
   <form [formGroup]="accountForm" (ngSubmit)="modifyAccount()">
     <ion-item>
-      <ion-avatar item-left>
-        <img src="../../../resources/icon.png" alt="user avatar">
-      </ion-avatar>
-      <button type="button" ion-button item-right clear small (click)="modify('image')">
-        <ion-icon name="create"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item>
       <ion-icon name="person" item-left></ion-icon>
       <ion-input item-right type="text" formControlName="username"></ion-input>
       <button type="button" ion-button item-right clear small (click)="modify('username')">
-        <ion-icon [name]="icon[1]"></ion-icon>
+        <ion-icon [name]="icon[0]"></ion-icon>
       </button>
     </ion-item>
     <ion-item>
       <ion-icon name="mail" item-left></ion-icon>
       <ion-input item-right type="email" formControlName="email"></ion-input>
       <button type="button" ion-button item-right clear small (click)="modify('email')">
-        <ion-icon [name]="icon[2]"></ion-icon>
+        <ion-icon [name]="icon[1]"></ion-icon>
       </button>
-    </ion-item>
-    <ion-item>
-      <h1>About</h1>
-      <button type="button" ion-button item-right clear small (click)="modify('description')">
-        <ion-icon [name]="icon[3]"></ion-icon>
-      </button>
-    </ion-item>
-    <ion-item>
-       <ion-textarea formControlName="description"></ion-textarea>
     </ion-item>
     <button ion-button type="submit" [disabled]="!accountForm.valid">Submit</button>
   </form>

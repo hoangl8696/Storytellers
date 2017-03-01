@@ -7,19 +7,6 @@ export class User {
   private token: string;
   private user_id: number;
   private email: string;
-  private description: string;
-  private avatar;
-
-  public getAvatar() {
-    return this.avatar;
-  }
-
-  public getDescription() {
-    if (this.description) {
-      return this.description
-    }
-    return "Your description";
-  }
 
   public getUsername() {
     return this.username;
@@ -51,13 +38,5 @@ export class User {
 
   public setUser_id(id: number) {
     this.user_id = id;
-  }
-
-  public setDescription(description: string) {
-    this.description = description;
-  }
-
-  public setAvatar (avatar) {
-    this.avatar = avatar;
   }
 }

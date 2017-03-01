@@ -39,6 +39,7 @@ export class AuthenticationPage {
   public signup() {
     this.apihelper.signup(this.extractData("signup")).subscribe(res => {
       this.apihelper.login(this.extractData("loginAfterSignup")).subscribe(res => {
+        this.apihelper.uploadFile()
         this.saveAndDismiss(res);
       });
     });
