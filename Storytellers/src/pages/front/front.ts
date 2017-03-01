@@ -1,3 +1,4 @@
+import { PlayerPage } from './../player/player';
 import { UploadPage } from './../upload/upload';
 import { FrontState } from './../../providers/front-state';
 import { AuthenticationPage } from './../authentication/authentication';
@@ -83,6 +84,17 @@ export class Front {
       .then(res => { loader.dismiss() });
   }
 
+  public view(card) {
+    let loader = this.loadingCtrl.create({
+      spinner: 'circles',
+      content: 'Loading data'
+    });
+    loader.present();
+    this.navCtrl.push(PlayerPage, card).then(() => {
+      loader.dismiss();
+    });
+  }
+
   private getMediaList() {
     return new Promise(resolve => {
       // this.apihelper.getMedia((this.state.loadStatus * 9), 9)
@@ -127,13 +139,12 @@ export class Front {
       card.setFile_name(media.filename);
       card.processData().then(res => {
         this.state.mediaList.unshift(card);
-        console.log(this.state.mediaList);
         this.state.index = this.state.index + 1;
         if (this.state.index == this.state.listLength) {
           resolve();
         } else {
           this.extractData(mediaList);
-          resolve()
+          resolve();
         }
       });
     });
