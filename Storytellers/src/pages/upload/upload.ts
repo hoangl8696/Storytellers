@@ -18,7 +18,7 @@ export class UploadPage {
   private uploadForm: FormGroup;
 
   constructor(public navCtrl: NavController, private formBuilder: FormBuilder,
-  private apihelper: ApiHelper, private user: User, private toastCtrl: ToastController) {
+    private apihelper: ApiHelper, private user: User, private toastCtrl: ToastController) {
     this.uploadForm = this.formBuilder.group({
       title: ['', Validators.required],
       description: [''],
@@ -51,8 +51,16 @@ export class UploadPage {
 
   private uploadData(data) {
     this.apihelper.uploadFile(data, this.user.getToken())
+      .map(res => res.json())
       .subscribe(res => {
-        this.navCtrl.pop();
+        let data = {
+          file_id: res.file_id,
+          tag: "Storytime"
+        }
+        this.apihelper.tag(data, this.user.getToken())
+          .subscribe(res => {
+            this.navCtrl.pop();
+          });
       });
   }
 

@@ -1,7 +1,6 @@
 import { UploadPage } from './../pages/upload/upload';
 import { FrontState } from './../providers/front-state';
 import { PlayerPage } from './../pages/player/player';
-import { CardsComponent } from './../components/cards/cards';
 import { Thumbnails } from './../pipes/thumbnails';
 import { Storage } from '@ionic/storage';
 import { User } from './../providers/user';
@@ -20,7 +19,6 @@ import { AccountPage } from '../pages/account/account';
     AccountPage,
     AuthenticationPage,
     Thumbnails,
-    CardsComponent,
     PlayerPage,
     UploadPage
   ],
@@ -33,7 +31,6 @@ import { AccountPage } from '../pages/account/account';
     Front,
     AccountPage,
     AuthenticationPage,
-    CardsComponent,
     PlayerPage,
     UploadPage
   ],

@@ -17,17 +17,14 @@ export class Front {
   @ViewChild(Content) content: Content;
 
   private isScrollUp: boolean;
-  private isReady: boolean;
 
   constructor(public navCtrl: NavController, private storage: Storage, private user: User,
     private apihelper: ApiHelper, private loadingCtrl: LoadingController, private zone: NgZone,
     private state: FrontState) {
     this.isScrollUp = false;
-    this.isReady = false;
   }
 
   ionViewWillEnter() {
-    this.isReady = false;
     let loader = this.loadingCtrl.create({
       spinner: 'circles',
       content: 'Loading data'
@@ -43,13 +40,9 @@ export class Front {
 
   ionViewDidEnter() {
     this.content.ionScrollEnd.subscribe(res => {
-      if (res.directionY === 'up' && res.scrollTop > 3000) {
+      if (res.directionY === 'up' && res.scrollTop > 500) {
         this.zone.run(() => {
           this.isScrollUp = true;
-        });
-      } else if (res.scrollTop > 500) {
-        this.zone.run(() => {
-          this.isReady = true;
         });
       } else {
         this.zone.run(() => {
@@ -72,14 +65,6 @@ export class Front {
       });
   }
 
-  public loadMore(event) {
-    console.log('im called');
-    this.state.loadStatus = this.state.loadStatus + 1;
-    this.getMediaList()
-      .then(res => {
-        event.complete();
-      })
-  }
 
   public goUp(event) {
     this.content.scrollToTop().then(res => {
@@ -99,32 +84,39 @@ export class Front {
   }
 
   private getMediaList() {
-    console.log(this.state);
-
     return new Promise(resolve => {
-      this.apihelper.getMedia((this.state.loadStatus * 9), 9)
+      // this.apihelper.getMedia((this.state.loadStatus * 9), 9)
+      //   .map(res => res.json())
+      //   .subscribe(mediaList => {
+      //     this.extractData(mediaList, 0)
+      //       .then(() => this.extractData(mediaList, 1))
+      //       .then(() => this.extractData(mediaList, 2))
+      //       .then(() => this.extractData(mediaList, 3))
+      //       .then(() => this.extractData(mediaList, 4))
+      //       .then(() => this.extractData(mediaList, 5))
+      //       .then(() => this.extractData(mediaList, 6))
+      //       .then(() => this.extractData(mediaList, 7))
+      //       .then(() => this.extractData(mediaList, 8))
+      //       .then(() => {
+      //         resolve();
+      //       });
+      //   });
+      this.apihelper.getFilesByTag("Storytime")
         .map(res => res.json())
         .subscribe(mediaList => {
-          this.extractData(mediaList, 0)
-            .then(() => this.extractData(mediaList, 1))
-            .then(() => this.extractData(mediaList, 2))
-            .then(() => this.extractData(mediaList, 3))
-            .then(() => this.extractData(mediaList, 4))
-            .then(() => this.extractData(mediaList, 5))
-            .then(() => this.extractData(mediaList, 6))
-            .then(() => this.extractData(mediaList, 7))
-            .then(() => this.extractData(mediaList, 8))
-            .then(() => {
+          this.state.listLength = mediaList.length;
+          this.extractData(mediaList)
+            .then(res => {
               resolve();
             });
         });
     });
   }
 
-  private extractData(mediaList: Card[], counter) {
+  private extractData(mediaList) {
     return new Promise(resolve => {
       let card: Card = new Card(this.apihelper, this.user);
-      let media: Card = mediaList[counter];
+      let media: Card = mediaList[this.state.index];
       card.setDescription(media.description);
       card.setFile_id(media.file_id);
       card.setMedia_type(media.media_type);
@@ -134,9 +126,15 @@ export class Front {
       card.setUser_id(media.user_id);
       card.setFile_name(media.filename);
       card.processData().then(res => {
-        this.state.mediaList.push(card);
+        this.state.mediaList.unshift(card);
         console.log(this.state.mediaList);
-        resolve();
+        this.state.index = this.state.index + 1;
+        if (this.state.index == this.state.listLength) {
+          resolve();
+        } else {
+          this.extractData(mediaList);
+          resolve()
+        }
       });
     });
 

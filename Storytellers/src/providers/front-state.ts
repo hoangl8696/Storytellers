@@ -5,15 +5,18 @@ import { Injectable } from '@angular/core';
 export class FrontState {
 
   public mediaList: Card[];
-  public loadStatus: number;
+  public listLength: number;
+  public index: number;
 
   constructor() {
     this.mediaList = [];
-    this.loadStatus = 0;
+    this.listLength = 0;
+    this.index = 0;
   }
 
   public clearState () {
     this.mediaList = [];
-    this.loadStatus = 0;
+    this.listLength = 0;
+    this.index = 0;
   }
 }
