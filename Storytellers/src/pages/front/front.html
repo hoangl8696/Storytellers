@@ -18,7 +18,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-list [virtualScroll]="state.mediaList">
+  <ion-list [virtualScroll]="state.mediaList" approxItemHeight="50px">
     <ion-card *virtualItem="let card">
       <ion-item>
         <!--<ion-avatar item-left>

@@ -18,6 +18,7 @@ export class MyApp {
   rootPage: any;
 
   pages: Array<{ title: string, component: any }>;
+  private activePage;
 
   constructor(public platform: Platform, private storage: Storage, private apihelper: ApiHelper, private user: User) {
     this.initializeApp();
@@ -27,6 +28,7 @@ export class MyApp {
       { title: 'Front Page', component: Front },
       { title: 'Account Page', component: AccountPage }
     ];
+    this.activePage = this.pages[0];
     this.storage.get('token').then(token => {
       if (token) {
         this.apihelper.getCurrentUser(token).subscribe(res => {
@@ -52,9 +54,14 @@ export class MyApp {
     });
   }
 
+  checkPage(page) {
+    return page == this.activePage;
+  }
+
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+      this.nav.setRoot(page.component);
+      this.activePage = page;
   }
 }
