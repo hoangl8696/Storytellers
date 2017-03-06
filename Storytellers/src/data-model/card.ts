@@ -24,6 +24,7 @@ export class Card {
   public thumbnails: {};
   public likes: { favourite_id: number, file_id: number, user_id: number }[];
   public comments: { comment_id: number, file_id: number, user_id: number, comment: string, time_added: string }[];
+  public tags: {tag_id: number, tag: string, file_id: number} [];
   public isComplete: boolean;
 
   constructor(private apihelper: ApiHelper, private user: User) {
@@ -40,6 +41,7 @@ export class Card {
     this.thumbnails = {};
     this.likes = [];
     this.comments = [];
+    this.tags = [];
     this.isComplete = false;
   }
 
@@ -136,11 +138,12 @@ export class Card {
       this.apihelper.getTagsByFile(this.file_id)
         .map(res => res.json())
         .subscribe(res => {
-          if (res.length == 2) {
-            this.isComplete = true;
-          } else {
-            this.isComplete = false;
-          }
+          this.tags = res;
+          this.tags.map(tag=>{
+            if (tag.tag == "Complete") {
+              this.isComplete = true;
+            }
+          });
           resolve();
         });
     });

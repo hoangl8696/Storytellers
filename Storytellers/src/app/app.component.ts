@@ -1,3 +1,4 @@
+import { ArchivePage } from './../pages/archive/archive';
 import { AccountPage } from './../pages/account/account';
 import { User } from './../providers/user';
 import { ApiHelper } from './../providers/api-helper';
@@ -26,7 +27,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Front Page', component: Front },
-      { title: 'Account Page', component: AccountPage }
+      { title: 'Account Page', component: AccountPage },
+      { title: 'Archive Page', component: ArchivePage }
     ];
     this.activePage = this.pages[0];
     this.storage.get('token').then(token => {

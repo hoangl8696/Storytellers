@@ -1,3 +1,4 @@
+import { FrontState } from './../../providers/front-state';
 import { User } from './../../providers/user';
 import { ApiHelper } from './../../providers/api-helper';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -24,7 +25,7 @@ export class PlayerPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private apihelper: ApiHelper, private user: User,
-    private zone: NgZone, private alertCtrl: AlertController) {
+    private zone: NgZone, private alertCtrl: AlertController, private frontState: FrontState) {
 
     this.isUser = false;
     this.cardData = this.navParams.data;

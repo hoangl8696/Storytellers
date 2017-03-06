@@ -25,6 +25,19 @@ export class Front {
     this.isScrollUp = false;
   }
 
+  // ionViewDidLoad() {
+  //   let loader = this.loadingCtrl.create({
+  //     spinner: 'circles',
+  //     content: 'Loading data'
+  //   });
+  //   loader.present();
+  //   this.state.clearState();
+  //   this.getMediaList(loader)
+  //     .then(res => {
+  //       console.log(this.state.mediaList);
+  //     });
+  // }
+
   ionViewWillEnter() {
     let loader = this.loadingCtrl.create({
       spinner: 'circles',
@@ -32,10 +45,9 @@ export class Front {
     });
     loader.present();
     this.state.clearState();
-    this.getMediaList()
+    this.getMediaList(loader)
       .then(res => {
         console.log(this.state.mediaList);
-        loader.dismiss();
       });
   }
 
@@ -58,8 +70,13 @@ export class Front {
   }
 
   public refresh(event) {
+    let loader = this.loadingCtrl.create({
+      spinner: 'circles',
+      content: 'Loading data'
+    });
+    loader.present();
     this.state.clearState();
-    this.getMediaList()
+    this.getMediaList(loader)
       .then(res => {
         console.log(this.state.mediaList);
         event.complete();
@@ -95,29 +112,13 @@ export class Front {
     });
   }
 
-  private getMediaList() {
+  private getMediaList(loader) {
     return new Promise(resolve => {
-      // this.apihelper.getMedia((this.state.loadStatus * 9), 9)
-      //   .map(res => res.json())
-      //   .subscribe(mediaList => {
-      //     this.extractData(mediaList, 0)
-      //       .then(() => this.extractData(mediaList, 1))
-      //       .then(() => this.extractData(mediaList, 2))
-      //       .then(() => this.extractData(mediaList, 3))
-      //       .then(() => this.extractData(mediaList, 4))
-      //       .then(() => this.extractData(mediaList, 5))
-      //       .then(() => this.extractData(mediaList, 6))
-      //       .then(() => this.extractData(mediaList, 7))
-      //       .then(() => this.extractData(mediaList, 8))
-      //       .then(() => {
-      //         resolve();
-      //       });
-      //   });
       this.apihelper.getFilesByTag("Storytime")
         .map(res => res.json())
         .subscribe(mediaList => {
           this.state.listLength = mediaList.length;
-          this.extractData(mediaList)
+          this.extractData(mediaList, loader)
             .then(res => {
               resolve();
             });
@@ -125,10 +126,13 @@ export class Front {
     });
   }
 
-  private extractData(mediaList) {
+  private extractData(mediaList, loader) {
     return new Promise(resolve => {
       let card: Card = new Card(this.apihelper, this.user);
       let media: Card = mediaList[this.state.index];
+      if (!media) {
+        resolve();
+      }
       card.setDescription(media.description);
       card.setFile_id(media.file_id);
       card.setMedia_type(media.media_type);
@@ -139,13 +143,18 @@ export class Front {
       card.setFile_name(media.filename);
       card.processData().then(res => {
         if (!card.isComplete) {
+
           this.state.mediaList.unshift(card);
+
         }
         this.state.index = this.state.index + 1;
-        if (this.state.index == this.state.listLength) {
+        if (this.state.index === this.state.listLength) {
+
+          loader.dismiss();
+
           resolve();
         } else {
-          this.extractData(mediaList);
+          this.extractData(mediaList, loader);
           resolve();
         }
       });

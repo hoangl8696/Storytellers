@@ -1,3 +1,5 @@
+import { ArchiveState } from './../providers/archive-state';
+import { ArchivePage } from './../pages/archive/archive';
 import { UploadPage } from './../pages/upload/upload';
 import { FrontState } from './../providers/front-state';
 import { PlayerPage } from './../pages/player/player';
@@ -20,7 +22,8 @@ import { AccountPage } from '../pages/account/account';
     AuthenticationPage,
     Thumbnails,
     PlayerPage,
-    UploadPage
+    UploadPage,
+    ArchivePage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -32,8 +35,9 @@ import { AccountPage } from '../pages/account/account';
     AccountPage,
     AuthenticationPage,
     PlayerPage,
-    UploadPage
+    UploadPage,
+    ArchivePage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ApiHelper, User, Storage, FrontState]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ApiHelper, User, Storage, FrontState, ArchiveState]
 })
 export class AppModule {}

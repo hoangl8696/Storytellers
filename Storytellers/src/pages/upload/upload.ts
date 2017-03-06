@@ -4,12 +4,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
 
-/*
-  Generated class for the Upload page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-upload',
   templateUrl: 'upload.html'
@@ -29,6 +23,12 @@ export class UploadPage {
   public upload(event) {
     if (event.srcElement[6].files[0]) {
       this.uploadData(this.extractData(event));
+      let toast = this.toastCtrl.create({
+        message: 'File added',
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.present();
     } else {
       let toast = this.toastCtrl.create({
         message: 'Please choose file',
