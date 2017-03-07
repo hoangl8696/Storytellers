@@ -38,7 +38,7 @@ export class Front {
   //     });
   // }
 
-  ionViewWillEnter() {
+  ionViewDidLoad() {
     let loader = this.loadingCtrl.create({
       spinner: 'circles',
       content: 'Loading data'

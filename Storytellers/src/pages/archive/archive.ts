@@ -29,7 +29,7 @@ export class ArchivePage {
     this.searchInput = ""
   }
 
-  ionViewWillEnter() {
+  ionViewDidLoad() {
     this.filter = "Date";
     let loader = this.loadingCtrl.create({
       spinner: 'circles',

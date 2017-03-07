@@ -1,3 +1,5 @@
+import { ContactsPage } from './../pages/contacts/contacts';
+import { RulesPage } from './../pages/rules/rules';
 import { ArchivePage } from './../pages/archive/archive';
 import { AccountPage } from './../pages/account/account';
 import { User } from './../providers/user';
@@ -28,7 +30,9 @@ export class MyApp {
     this.pages = [
       { title: 'Front Page', component: Front },
       { title: 'Account', component: AccountPage },
-      { title: 'Archive', component: ArchivePage }
+      { title: 'Archive', component: ArchivePage },
+      { title: 'Rules', component: RulesPage },
+      { title: 'Contacts', component: ContactsPage}
     ];
     this.activePage = this.pages[0];
     this.storage.get('token').then(token => {

@@ -42,7 +42,7 @@ export class UploadPage {
   private extractData(event: Event) {
     let form: FormData = new FormData();
     form.append('file', event.srcElement[6].files[0]);
-    form.append('title', this.uploadForm.controls['title'].value)
+    form.append('title', this.uploadForm.controls['title'].value);
     if (this.uploadForm.controls['description'].value) {
       form.append('description', this.uploadForm.controls['description'].value);
     }

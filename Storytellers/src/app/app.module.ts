@@ -1,3 +1,5 @@
+import { RulesPage } from './../pages/rules/rules';
+import { ContactsPage } from './../pages/contacts/contacts';
 import { ArchiveState } from './../providers/archive-state';
 import { ArchivePage } from './../pages/archive/archive';
 import { UploadPage } from './../pages/upload/upload';
@@ -23,7 +25,9 @@ import { AccountPage } from '../pages/account/account';
     Thumbnails,
     PlayerPage,
     UploadPage,
-    ArchivePage
+    ArchivePage,
+    ContactsPage,
+    RulesPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -36,7 +40,9 @@ import { AccountPage } from '../pages/account/account';
     AuthenticationPage,
     PlayerPage,
     UploadPage,
-    ArchivePage
+    ArchivePage,
+    ContactsPage,
+    RulesPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ApiHelper, User, Storage, FrontState, ArchiveState]
 })
