@@ -15,6 +15,9 @@
 
 <ion-content padding>
 
+  <ion-searchbar [(ngModel)]="searchInput" (ionInput)="doSearch($event)" (ionClear)="doClear($event)">
+  </ion-searchbar>
+
   <ion-segment [(ngModel)]="filter" color="primary">
     <ion-segment-button value="Date" (ionSelect)="selectedDate()">
       Date
@@ -61,5 +64,5 @@
 </ion-content>
 
 <ion-footer>
-<ion-title>Footer</ion-title>
+  <ion-title>Footer</ion-title>
 </ion-footer>

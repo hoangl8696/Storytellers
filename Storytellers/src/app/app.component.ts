@@ -27,8 +27,8 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Front Page', component: Front },
-      { title: 'Account Page', component: AccountPage },
-      { title: 'Archive Page', component: ArchivePage }
+      { title: 'Account', component: AccountPage },
+      { title: 'Archive', component: ArchivePage }
     ];
     this.activePage = this.pages[0];
     this.storage.get('token').then(token => {

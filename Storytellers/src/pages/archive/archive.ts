@@ -1,3 +1,4 @@
+import { Keyboard } from 'ionic-native';
 import { ArchiveState } from './../../providers/archive-state';
 import { User } from './../../providers/user';
 import { ApiHelper } from './../../providers/api-helper';
@@ -18,12 +19,14 @@ export class ArchivePage {
   private filter;
   private isScrollUp: boolean;
   private list: Card[];
+  private searchInput: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private loadingCtrl: LoadingController,
     private storage: Storage, private zone: NgZone, private apihelper: ApiHelper,
     private user: User, private archiveState: ArchiveState) {
     this.filter = "Date";
     this.isScrollUp = false;
+    this.searchInput = ""
   }
 
   ionViewWillEnter() {
@@ -39,6 +42,21 @@ export class ArchivePage {
         console.log(this.archiveState.mediaList);
         this.list = this.archiveState.mediaList;
       });
+  }
+
+  public doSearch(event) {
+    this.list = this.archiveState.mediaList;
+    let searchValue: string = event.target.value;
+    if (searchValue && searchValue.trim() != '') {
+      this.list = this.archiveState.mediaList.filter((item) => {
+        return (item.title.toLocaleLowerCase().indexOf(searchValue.toLocaleLowerCase()) > -1);
+      });
+    }
+  }
+
+  public doClear(event) {
+    this.list = this.archiveState.mediaList;
+    Keyboard.close();
   }
 
   public refresh(event) {
@@ -94,7 +112,7 @@ export class ArchivePage {
         this.archiveState.index = this.archiveState.index + 1;
         if (this.archiveState.index == this.archiveState.listLength) {
 
-            loader.dismiss();
+          loader.dismiss();
 
           resolve();
         } else {
@@ -130,9 +148,9 @@ export class ArchivePage {
   public selectedName() {
     console.log("Name filter");
     this.list.sort((media1, media2) => {
-      if (media2.username.toLocaleLowerCase() > media1.username.toLocaleLowerCase()) {
+      if (media2.title.toLocaleLowerCase() > media1.title.toLocaleLowerCase()) {
         return -1;
-      } else if (media2.username.toLocaleLowerCase() < media1.username.toLocaleLowerCase()) {
+      } else if (media2.title.toLocaleLowerCase() < media1.title.toLocaleLowerCase()) {
         return 1;
       } else {
         return 0;
