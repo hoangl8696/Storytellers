@@ -74,7 +74,7 @@
     <form [formGroup]="commentForm" (ngSubmit)="postComment($event)">
       <ion-item>
         <ion-label floating>Write more</ion-label>
-        <ion-textarea #focusInput formControlName="comment"></ion-textarea>
+        <ion-textarea placeholder="Max 250 characters" #focusInput formControlName="comment"></ion-textarea>
       </ion-item>
       <ion-item>
       <button item-left ion-button type="submit" [disabled]="!commentForm.valid">Add</button>

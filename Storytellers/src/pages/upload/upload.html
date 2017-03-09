@@ -17,9 +17,12 @@
       <ion-label>Description</ion-label>
       <ion-textarea formControlName="description"></ion-textarea>
     </ion-item>
-    <p>
-      <input type="file" formControlName="file" placeholder="Choose file">
-    </p>
+    <ion-item [hidden]="isImgChosen">
+      <img [src]="picture" alt="error">
+    </ion-item>
+    <ion-item>
+      <button ion-button type="button" (click)="choosePicture($event)">Choose Picture</button>
+    </ion-item>
     <ion-item>
       <button ion-button type="submit" [disabled]="!uploadForm.valid">Upload</button>
     </ion-item>

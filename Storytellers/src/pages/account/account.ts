@@ -65,8 +65,8 @@ export class AccountPage {
 
   public modifyAccount() {
     this.apihelper.modifyUser(this.accountForm.value, this.user.getToken())
-    .subscribe(res=>{
-       this.apihelper.getCurrentUser(this.user.getToken()).subscribe(res => {
+      .subscribe(res => {
+        this.apihelper.getCurrentUser(this.user.getToken()).subscribe(res => {
           this.user.setEmail(res.json().email);
           this.user.setUsername(res.json().username);
           this.username = this.user.getUsername();
@@ -74,23 +74,23 @@ export class AccountPage {
           this.reset("username");
           this.reset("email");
         });
-    });
+      });
   }
 
   private extractData() {
 
   }
 
-  private reset (element: string) {
+  private reset(element: string) {
     switch (element) {
       case 'username':
-      this.icon[0] = "create";
-      this.accountForm.controls['username'].reset(this.username);
-      break;
+        this.icon[0] = "create";
+        this.accountForm.controls['username'].reset(this.username);
+        break;
       case 'email':
-      this.icon[1] = "create";
-      this.accountForm.controls['email'].reset(this.email);
-      break;
+        this.icon[1] = "create";
+        this.accountForm.controls['email'].reset(this.email);
+        break;
       // case 'description':
       // this.icon[3] = "create";
       // this.accountForm.controls['description'].reset(this.description);

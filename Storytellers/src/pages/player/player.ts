@@ -50,7 +50,7 @@ export class PlayerPage {
   public finishStory (){
     let confirm = this.alertCtrl.create({
       title: 'Are you sure you want to mark this story as finished?',
-      message: 'This action cannot be undo',
+      message: 'This action cannot be undone',
       buttons: [
         {
           text: 'No',
@@ -137,8 +137,8 @@ export class PlayerPage {
 
   public postComment(event) {
     let confirm = this.alertCtrl.create({
-      title: 'Are you sure your story is ready?',
-      message: 'You will unable to edit or delete the story after sending it',
+      title: 'Ready?',
+      message: 'You will be unable to edit or delete your part of the story after sending it',
       buttons: [
         {
           text: 'No',

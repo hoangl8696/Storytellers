@@ -31,7 +31,7 @@
       </ion-item>
       <ion-item>
         <ion-thumbnail item-left>
-          <ion-img [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + (card.filename | thumbnails: 'small')" alt="audio file"></ion-img>
+          <ion-img cache="true" [src]="'http://media.mw.metropolia.fi/wbma/uploads/' + (card.filename | thumbnails: 'small')" alt="audio file"></ion-img>
         </ion-thumbnail>
         <ion-item>
           <h3>{{card.media_type}}</h3>
