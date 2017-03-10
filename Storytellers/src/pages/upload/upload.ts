@@ -3,7 +3,7 @@ import { ApiHelper } from './../../providers/api-helper';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 import { NavController, ToastController, ActionSheetController } from 'ionic-angular';
-import { Camera, File, FilePath, Transfer, FileUploadResult } from 'ionic-native';
+import { Camera, FilePath, Transfer, FileUploadResult } from 'ionic-native';
 
 @Component({
   selector: 'page-upload',
@@ -18,7 +18,7 @@ export class UploadPage {
     private apihelper: ApiHelper, private user: User, private toastCtrl: ToastController, private actionsheetCtrl: ActionSheetController) {
     this.uploadForm = this.formBuilder.group({
       title: ['', Validators.required],
-      description: [''],
+      description: ['', Validators.maxLength(250)],
     });
     this.isImgChosen = true;
   }

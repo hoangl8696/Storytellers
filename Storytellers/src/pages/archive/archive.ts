@@ -1,9 +1,9 @@
+import { WatcherPage } from './../watcher/watcher';
 import { Keyboard } from 'ionic-native';
 import { ArchiveState } from './../../providers/archive-state';
 import { User } from './../../providers/user';
 import { ApiHelper } from './../../providers/api-helper';
 import { Card } from './../../data-model/card';
-import { PlayerPage } from './../player/player';
 import { AuthenticationPage } from './../authentication/authentication';
 import { Storage } from '@ionic/storage';
 import { Component, ViewChild, NgZone } from '@angular/core';
@@ -29,7 +29,7 @@ export class ArchivePage {
     this.searchInput = ""
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.filter = "Date";
     let loader = this.loadingCtrl.create({
       spinner: 'circles',
@@ -189,7 +189,7 @@ export class ArchivePage {
       content: 'Loading data'
     });
     loader.present();
-    this.navCtrl.push(PlayerPage, card).then(() => {
+    this.navCtrl.push(WatcherPage, card).then(() => {
       loader.dismiss();
     });
   }

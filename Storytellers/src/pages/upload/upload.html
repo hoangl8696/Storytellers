@@ -15,7 +15,7 @@
     </ion-item>
     <ion-item>
       <ion-label>Description</ion-label>
-      <ion-textarea formControlName="description"></ion-textarea>
+      <ion-textarea rows="5" maxlength="250" placeholder="Max 250 characters" formControlName="description"></ion-textarea>
     </ion-item>
     <ion-item [hidden]="isImgChosen">
       <img [src]="picture" alt="error">

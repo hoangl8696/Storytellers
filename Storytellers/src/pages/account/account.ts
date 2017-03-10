@@ -77,10 +77,6 @@ export class AccountPage {
       });
   }
 
-  private extractData() {
-
-  }
-
   private reset(element: string) {
     switch (element) {
       case 'username':

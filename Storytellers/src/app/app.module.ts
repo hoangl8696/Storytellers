@@ -1,3 +1,4 @@
+import { WatcherPage } from './../pages/watcher/watcher';
 import { RulesPage } from './../pages/rules/rules';
 import { ContactsPage } from './../pages/contacts/contacts';
 import { ArchiveState } from './../providers/archive-state';
@@ -27,7 +28,8 @@ import { AccountPage } from '../pages/account/account';
     UploadPage,
     ArchivePage,
     ContactsPage,
-    RulesPage
+    RulesPage,
+    WatcherPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -42,7 +44,8 @@ import { AccountPage } from '../pages/account/account';
     UploadPage,
     ArchivePage,
     ContactsPage,
-    RulesPage
+    RulesPage,
+    WatcherPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, ApiHelper, User, Storage, FrontState, ArchiveState]
 })

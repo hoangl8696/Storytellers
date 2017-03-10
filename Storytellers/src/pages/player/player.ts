@@ -1,4 +1,3 @@
-import { FrontState } from './../../providers/front-state';
 import { User } from './../../providers/user';
 import { ApiHelper } from './../../providers/api-helper';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -22,17 +21,18 @@ export class PlayerPage {
   private alreadyLiked;
   private comment;
   private isUser;
+  private commentUser;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder, private apihelper: ApiHelper, private user: User,
-    private zone: NgZone, private alertCtrl: AlertController, private frontState: FrontState) {
-
+    private zone: NgZone, private alertCtrl: AlertController) {
+    this.commentUser = "default";
     this.isUser = false;
     this.cardData = this.navParams.data;
     this.alreadyLiked = false;
     this.userComment = false;
     this.commentForm = this.formBuilder.group({
-      comment: ['', Validators.required]
+      comment: ['', Validators.compose([Validators.required, Validators.maxLength(250)])]
     });
   }
 
@@ -45,6 +45,13 @@ export class PlayerPage {
     if (this.user.getUser_id() == this.cardData.user_id) {
       this.isUser = true;
     }
+    this.apihelper.getUser(this.comment.user_id, this.user.getToken())
+    .map(res=>res.json())
+    .subscribe(res=>{
+      this.zone.run(()=>{
+        this.commentUser = res.username;
+      });
+    });
   }
 
   public finishStory (){
